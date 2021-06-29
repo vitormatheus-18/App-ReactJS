@@ -1,15 +1,10 @@
-import { Button } from './components/button';
+import { Home } from './pages/Home';
  
 function App() {
   return (
-    <div>
-      <Button />
-      <Button />
-      <Button />
-      <Button />
-      <Button />
-      <h1>Simbora para a Next Level Week!</h1>
-    </div>
+    <Home/>
+    
   );
 }
+
 export default App;
