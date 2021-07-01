@@ -1,6 +1,7 @@
 import illustrationImg from '../assets/images/illustration.svg'
 import logoImg from '../assets/images/logo.svg'
 import googleIconImg from '../assets/images/google-icon.svg';
+import { Button } from '../components/button';
 
 import '../styles/auth.scss';
 
@@ -13,23 +14,23 @@ export function Home(){
                 <p>Tire suas dúvidas em tempo real</p>
             </aside>
             <main>
-                <div>
+                <div className="main-content">
                     <img src={logoImg} alt="Logo da aplicação"/>
-                    <button>
+                    <button className="btn-createWithGoogle">
                         <img src={googleIconImg} alt="Logo do google"/>
                         Crie sua sala com o Google
                     </button>
-                    <div>
-                        ou entyre em uma sala
+                    <div className="separator">
+                        ou entre em uma sala
                     </div>
                     <form>
                         <input 
                             type="text"
                             placeholder="Digite o código da sala"
                         />
-                        <button type="submit">
+                        <Button type="submit">
                             Entrar na sala
-                        </button>
+                        </Button>
                     </form>
                 </div>
             </main>
