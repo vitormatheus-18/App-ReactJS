@@ -1,13 +1,36 @@
+import { type } from 'os';
 import logoImg from '../assets/images/logo.svg';
 import { RoomCode } from '../components/RoomCode';
 import { useParams } from 'react-router-dom';
-import { FormEvent, useState} from 'react';
+import { FormEvent, useEffect, useState} from 'react';
 import { useAuth } from '../hooks/useAuth';
 
 import { Button } from '../components/button';
 import { database } from '../services/firebase';
 
 import '../styles/room.scss';
+
+type FirebaseQuestions = Record<string, {
+    author: {
+        name: string;
+        avatar: string;
+    }
+    content: string;
+    isAnswered: boolean;
+    isHighLighted: boolean;
+
+}>
+
+type Question = {
+    id: string;
+    author: {
+        name: String;
+        avatar: String;
+    }
+    content: string;
+    isAnswered: boolean;
+    isHighLighted: boolean;
+}
 
 type RoomParams = {
     id: string;
@@ -17,8 +40,32 @@ export function Room(){
     const { user } = useAuth();
     const params = useParams<RoomParams>();
     const [newQuestion, setNewQuestion] = useState('')
+    const [questions, setQuestions] = useState<Question[]>([])
+    const [title, setTitle] = useState('')
 
     const roomId = params.id
+
+    useEffect(() => {
+        const roomRef = database.ref(`rooms/${roomId}`);
+
+        roomRef.on('value', room => {  //Ouvir o evento mais de uma vez: On, única vez = Once.
+            const databaseRoom = room.val();
+            const firebaseQuestions: FirebaseQuestions = databaseRoom.questions ?? {};
+
+            const parsedQuestions = Object.entries(firebaseQuestions).map(([key, value]) => {
+                return {
+                    id: key,
+                    content: value.content,
+                    author: value.author,
+                    isHighLighted: value.isHighLighted,
+                    isAnswered: value.isAnswered,                    
+                }
+            })
+
+            setTitle(databaseRoom.title);
+            setQuestions(parsedQuestions)
+        })
+    }, [roomId]);
 
     async function handleSetQuestion(event: FormEvent){
         event.preventDefault();          //Bloqueia o recarregamento de tela, "aquela piscada chata!"
@@ -57,8 +104,8 @@ export function Room(){
 
            <main>
                <div className="room-title">
-                   <h1>Sala React</h1>
-                   <span>4 perguntas</span>
+                    <h1>Sala {title}</h1>
+                    { questions.length > 0 && <span>{questions.length} perguntas</span>}
                </div>
                <form onSubmit={handleSetQuestion}>
                     <textarea 
@@ -80,6 +127,8 @@ export function Room(){
                         <Button type="submit" disabled={!user}>Enviar pergunta</Button>
                     </div>
                </form>
+
+               {JSON.stringify(questions)}
            </main>
        </div>
     );
