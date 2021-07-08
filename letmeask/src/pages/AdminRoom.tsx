@@ -2,8 +2,8 @@ import { type } from 'os';
 import logoImg from '../assets/images/logo.svg';
 import { RoomCode } from '../components/RoomCode';
 import { useParams } from 'react-router-dom';
-import { FormEvent, useEffect, useState} from 'react';
-import { useAuth } from '../hooks/useAuth';
+
+// import { useAuth } from '../hooks/useAuth';
 import { useRoom } from '../hooks/useRoom'
 
 import { Button } from '../components/button';
@@ -17,40 +17,14 @@ type RoomParams = {
 }
 
 export function AdminRoom(){
-    const { user } = useAuth();
+    // const { user } = useAuth();
     const params = useParams<RoomParams>();
-    const [newQuestion, setNewQuestion] = useState('');
+
     const roomId = params.id;
 
 
     const { title, questions } = useRoom(roomId);
     
-    async function handleSetQuestion(event: FormEvent){
-        event.preventDefault();          //Bloqueia o recarregamento de tela, "aquela piscada chata!"
-
-        if (newQuestion.trim() === ''){
-            return;
-        }
-
-        if (!user) {
-            throw new Error('You must be logged in')
-        }
-
-        const question = {
-            content: newQuestion,
-            author: {
-                name: user.name,
-                avatar: user.avatar,
-            },
-            isHighLighted : false,      //Se a pergunta estiver destacada pelo admin
-            inAnswered: false           //Se está respondida ou não
-        };
-
-        await database.ref(`rooms/${roomId}/questions`).push(question);
-
-        setNewQuestion('');   //set o campo para vazio
-    }
-
     return(
        <div id="page-room">
            <header>
