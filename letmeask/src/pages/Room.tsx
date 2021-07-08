@@ -98,7 +98,7 @@ export function Room(){
            <header>
                <div className="content">
                     <img src={logoImg} alt="letmeask"/>
-                    <RoomCode code={ roomId} /> 
+                    <RoomCode code={ roomId } /> 
                </div>
            </header>
 
