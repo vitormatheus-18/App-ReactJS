@@ -4,23 +4,25 @@
     box-shadow: 0 2px 12px  rgba(0, 0, 0, 0.4);
     padding: 24px;
 
-    & + .question{          //lembrete: o "&" remete a classe superior, e para este caso. 
+    & + .question {          //lembrete: o "&" remete a classe superior, e para este caso. 
                             //Diz que a partir da segunda "question" a margin Top será a definida
         margin-top: 8px;   
     }
 
     
-    &.highLighted{
+    &.highlighted {
         background: #f4f0ff;
         border: 1px solid #835afd;
+        cursor: pointer;
         
         footer .user-info span {
             color: #29292e;
         }
     }
 
-    &.answered{
+    &.answered {
         background: #d8dcdd;
+        cursor: pointer;
     }
 
     p {

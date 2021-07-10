@@ -83,18 +83,22 @@ export function AdminRoom(){
                                 isAnswered={question.isAnswered}
                                 isHighLighted={question.isHighLighted}
                             >
-                                <button
-                                    type="button"
-                                    onClick={() => handleCheckQuestionAsAnswered(question.id)}
-                                >
-                                    <img src={checkImg} alt="marcar pergunta" />
-                                </button>
-                                <button
-                                    type="button"
-                                    onClick={() => handleHighLightQuestion(question.id)}
-                                >
-                                    <img src={answerImg} alt="destacar pergunta" />
-                                </button>
+                                {!question.isAnswered && (
+                                    <>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleCheckQuestionAsAnswered(question.id)}
+                                        >
+                                            <img src={checkImg} alt="marcar pergunta" />
+                                        </button>
+                                        <button
+                                            type="button"
+                                            onClick={() => handleHighLightQuestion(question.id)}
+                                        >
+                                            <img src={answerImg} alt="destacar pergunta" />
+                                        </button>
+                                    </> 
+                                )}
                                 <button
                                     type="button"
                                     onClick={() => handleDeleteQuestion(question.id)}
