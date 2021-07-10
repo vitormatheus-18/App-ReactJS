@@ -43,7 +43,7 @@ export function Room(){
                 avatar: user.avatar,
             },
             isHighLighted : false,      //Se a pergunta estiver destacada pelo admin
-            inAnswered: false           //Se está respondida ou não
+            isAnswered: false           //Se está respondida ou não
         };
 
         await database.ref(`rooms/${roomId}/questions`).push(question);
@@ -105,6 +105,8 @@ export function Room(){
                             key={question.id}
                             content={question.content}
                             author={question.author}
+                            isAnswered={question.isAnswered}
+                            isHighLighted={question.isHighLighted}
                         >
                             <button
                                 className={`like-button ${question.likeId ? 'liked': ''}`}
